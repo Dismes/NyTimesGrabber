@@ -6,13 +6,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 var handlebars = require("express-handlebars");
 var mongoose = require("mongoose");
-
-
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/nytreact", {
-  useMongoClient: true
-});
-
+var NyApi = require("./modules/NyApi")
 
 // Initialize Express
 var MainPage = "";
@@ -23,7 +17,6 @@ var articleArray = "";
 app.use(express.static("public"));
 
 //setup handlebars
-
 app.engine("handlebars", handlebars({
     defaultLayout: "main"
 }));
@@ -38,7 +31,10 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-app.get("/get", function (req, res) {});
+app.get("/get", function (req, res) {
+    NyAp.getFromApi();
+    
+});
 
 app.get("/post", function (req, res) {});
 
@@ -50,6 +46,6 @@ app.get("/", function (req, res) {
 });
 
 // Listen on port 3000
-app.listen(3000, function () {
+app.listen(8000, function () {
     console.log("App running on port 3000!");
 });
